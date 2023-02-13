@@ -1,0 +1,29 @@
+.attendance-portal{
+    margin: 2rem;
+}
+.attendance-portal h1{
+    font-size: 1.8rem;
+}
+.data-entry{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 2rem;
+}
+.data-entry input{
+    width: 20rem;
+    height: 3rem;
+    padding: .5rem 2rem;
+}
+
+.attendance-portal .show-worklist-btn{
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+#upload-attendance-image a{
+    color: black;
+
+}
+

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--      BOOTSTRAP CSS     -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--      BOOTSTRAP JS      -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <!--    FONT AWESOME    -->
+    <script src="https://kit.fontawesome.com/47829851ea.js" crossorigin="anonymous"></script>
+
+    <!--        CUSTOM CSS          -->
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./practice.css">
+
+    <style>
+        img{
+            height: 200px;
+            width: 200px;
+            border: 2px solid black;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="">
+        <input type="text" required>
+        <input type="submit">
+    </form>
+    <label for="">Image Name</label><input type="text" id="namebox"><label for="" id="extlab"></label><br><br>
+    <img alt="" id="myimg"> <label for="" id="progess"></label> <br><br>
+  
+     <button id="selbtn">Select Image</button>    
+     <button id="upbtn">Upload Image</button>    
+     <button id="downbtn">Retreive Image</button>
+     
+     
+     <!-- <script src="./app.js"></script> -->
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-app.js";
+        import { getDatabase,ref,set,child,get,update,remove } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-database.js";
+
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBeDnlqVuzVpFHXWKhldRhpDcRNqsFoSrI",
+            authDomain: "kalamfirebird.firebaseapp.com",
+            databaseURL: "https://kalamfirebird-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "kalamfirebird",
+            storageBucket: "kalamfirebird.appspot.com",
+            messagingSenderId: "584822980805",
+            appId: "1:584822980805:web:a12fb2f187a95291eb70ac",
+            measurementId: "G-DC150X0WY1"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        import { getStorage,ref as sRef,uploadBytesResumable,getDownloadURL } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-storage.js";
+        
+        const realDb = getDatabase();
+
+        let files = []
+        let reader = new FileReader();
+
+        let namebox = document.getElementById('namebox');
+        let extlab = document.getElementById('extlab');
+        let myimg = document.getElementById('myimg');
+        let proglab = document.getElementById('progess');
+        let selBtn = document.getElementById('selbtn');
+        let uploadBtn = document.getElementById('upbtn');
+        let downBtn = document.getElementById('downbtn');
+ 
+        let input = document.createElement('input')
+        input.type = 'file';
+
+        input.onchange = e =>{
+            files = e.target.files;
+
+            let extension = getFileExt(files[0])
+            let name = getFileName(files[0])
+
+            namebox.value = name;
+            extlab.innerHTML = extension;
+
+            reader.readAsDataURL(files[0]);
+
+        }
+
+        reader.onload = function(){
+            myimg.src = reader.result;
+        }
+
+        selBtn.onclick = function(){
+            input.click();
+        }
+        function getFileExt(file){
+            let temp = file.name.split('.');
+            let ext = temp.slice((temp.length-1),(temp.length))
+            return '.'+ext[0]
+        }
+        function getFileName(file){
+            let temp = file.name.split('.');
+            let fname = temp.slice(0,-1).join('.');
+            return fname
+        }
+
+        async function UploadProcess() {
+                var ImgToUpload = files[0];
+                var ImgName = namebox.value + extlab.innerHTML;
+                const metaData = {
+                    contentType: ImgToUpload.type
+                }
+                const storage = getStorage();
+                const stroageRef = sRef(storage, "Images/" + ImgName);
+                const UploadTask = uploadBytesResumable(stroageRef, ImgToUpload, metaData);
+                console.log(UploadTask);
+                UploadTask.on('state-changed', (snapshot) => {
+                    var progess = (snapshot.bytesTransferred / snapshot.totalBytes) *100
+                    proglab.innerHTML = "Upload " + progess + "%"
+                },
+                (error) => {
+                    alert("error: image not uploaded!");
+                 },
+                    () => {
+                        getDownloadURL(UploadTask.snapshot.ref).then((downloadURL)=>{
+                            SaveURLToRealtimeDB(downloadURL)
+                            console.log(downloadURL);
+                        });
+                    }
+                )
+        }
+
+        function getDownloadURLFunc(){
+            const storage = getStorage();
+            const starsRef = sRef(storage, 'image8.jpg');
+            console.log(starsRef);
+            getDownloadURL(starsRef)
+                .then((url) => {
+                    console.log(url);
+                    SaveURLToRealtimeDB(url)
+                    // Insert url into an <img> tag to "download"
+                })
+                .catch((error) => {
+                    switch (error.code) {
+                        case 'storage/object-not-found':
+                            break;
+                        case 'storage/unauthorized':
+                            break;
+                        case 'storage/canceled':
+                            break;
+                        case 'storage/unknown':
+                            break;
+                    }
+                });
+
+        }
+
+            function SaveURLToRealtimeDB(URL){
+                let name = namebox.value;
+                let ext = extlab.innerHTML;
+
+                // set(ref(realDb,"ImageLinks"+name),{
+                //     ImageName :(name+ext),
+                //     ImgUrl :URL
+                // })
+                set(ref(realDb, "ImageLinksdemo"), {
+                    ImageName: "test",
+                    ImgUrl: URL
+                })
+
+            }
+
+                function getURLToRealtimeDB(URL) {
+                    let name = namebox.value;
+                    let dbRef = ref(realDb);
+                    // get(child(dbRef, "ImageLinks" + name)).then((snapshot)=>{
+                    //     if(snapshot.exists()){
+                    //         myimg.src = snapshot.val().ImgUrl
+                    //     }
+                    // })
+                    get(child(dbRef, "ImageLinksdemo")).then((snapshot) => {
+                        if (snapshot.exists()) {
+                            myimg.src = snapshot.val().ImgUrl
+                        }
+                    })
+                }
+            uploadBtn.onclick = UploadProcess
+            // downBtn.onclick = getURLToRealtimeDB
+            downBtn.addEventListener('click',()=>{
+                getDownloadURLFunc()
+                getURLToRealtimeDB()
+            })
+
+
+                
+    </script>
+
+</body>
+
+</html>
+
+
+
+<!-- 
+
+<tbody>
+    <tr class="report report-box">
+        <td><label for="">Report</label></td>
+        <td>
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                    aria-expanded="false" style="background-color: #ffffff; border: 0.5px solid rgb(182, 181, 181);">
+                    Accepted Geotags
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="#">Accepted Geotags</a></li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+</tbody> -->

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--      BOOTSTRAP CSS     -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--      BOOTSTRAP JS      -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <!--    FONT AWESOME    -->
+    <script src="https://kit.fontawesome.com/47829851ea.js" crossorigin="anonymous"></script>
+
+    <!--        CUSTOM CSS          -->
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        #type1{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+                min-height: 85vh;
+     min-width: 100%;
+        background: linear-gradient(rgba(14, 18, 18, 0.5), rgba(0, 0, 0, 0.7)),
+            url(./3.jpg) center/cover no-repeat;
+      } 
+
+        
+#type1{
+  background-color:#42a5f5;
+  padding-bottom: 50px;
+}
+.btn-5 {
+  text-align: center;
+  display: inline-block;
+  padding: 15px 40px;
+  border: 1px solid #fff;
+  cursor: pointer;
+  letter-spacing: 2px;
+  position:relative;
+  overflow:hidden;
+  margin: 0 20px;
+  color: #fff;
+}
+
+.btn-5:before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 0;
+  background : #fff;
+  left: 0;
+  bottom: 0;
+  transition: all .3s;
+  opacity: 0.3;
+}
+
+.btn-5:hover:before {
+  width: 100%;
+}
+@media only screen and (max-width: 600px) {
+    .btn-5{
+        font-size: 0.9rem;
+        padding: 15px 30px;
+
+    }
+    #type1{
+        display: flex;
+        flex-direction: column;
+    }
+    #type1 a{
+        margin-bottom: 1rem;
+    }
+    #type1 .upload-img{
+        padding: 15px 45px;
+    }
+}
+
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <!--            NAVIGATION BAR              -->
+        <nav>
+            <div class="brand">
+                <div class="logo">
+                    <a href="./index.html"><img src="./images/lion-logo.png" alt="" id="nav-logo1"></a>
+                    <a href="./index.html"><img src="./images/gandhi-logo.jpg" alt="" id="nav-logo2"></a>
+                </div>
+                <div class="title big-screen">
+                    <p>THE MAHATMA GANDHI NATIONAL</p>
+                    <p> RURAL EMPLOYMENT GUARANTEE ACT 2005</p>
+                </div>
+                <div class="title small-screen">
+                    <p>NGREA</p>
+                </div>
+            </div>
+            <div class="nav-items">
+                <button type="button" class="btn login-btn-nav"><a href="./bhuvan.html">Bhuvan</a></button>
+            </div>
+        </nav>
+
+    <div id="type1">    
+        <a class="btn-5 upload-img" href=" http://127.0.0.1:7860/"><i class="fa-solid fa-cloud-arrow-up"></i>
+            Upload Image
+        </a>
+        <a class="btn-5" href="./attendance.html"><i class="fa-solid fa-cloud-arrow-up"></i>
+            Go to attendance
+        </a>
+    </div>
+    <!--     XXX       NAVIGATION BAR        XXX      -->
+
+    <footer class="text-center text-white" style="background-color: #f1f1f1;">
+        <!-- Grid container -->
+        <div class="container pt-4">
+            <!-- Section: Social media -->
+            <section class="mb-4">
+                <!-- Facebook -->
+                <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
+                    data-mdb-ripple-color="dark"><i class="fab fa-facebook-f"></i></a>
+
+                <!-- Twitter -->
+                <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
+                    data-mdb-ripple-color="dark"><i class="fab fa-twitter"></i></a>
+
+                <!-- Google -->
+                <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
+                    data-mdb-ripple-color="dark"><i class="fab fa-google"></i></a>
+
+                <!-- Instagram -->
+                <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
+                    data-mdb-ripple-color="dark"><i class="fab fa-instagram"></i></a>
+
+                <!-- Linkedin -->
+                <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
+                    data-mdb-ripple-color="dark"><i class="fab fa-linkedin"></i></a>
+                <!-- Github -->
+                <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
+                    data-mdb-ripple-color="dark"><i class="fab fa-github"></i></a>
+            </section>
+            <!-- Section: Social media -->
+        </div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2022 Copyright:
+            <a class="text-dark" href="https://mdbootstrap.com/">R.M.K. Engineering College</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <script src="./app.js"></script>
+</body>
+
+</html>

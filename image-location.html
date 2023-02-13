@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input {
+            border: 1px solid #ccc;
+            padding: 4px 5px;
+            margin-top: 10px;
+            border-radius: 2px;
+        }
+    
+        p {
+            background: #ccc;
+            padding: 10px;
+            font-size: 17px;
+            color: #F44336;
+            width: 231px;
+            border-radius: 2px;
+        }
+    
+        img#preview {
+            border: 2px dotted red;
+        }
+    
+        img {
+            cursor: pointer;
+        }
+    
+        .uploadSec {
+            width: 300px;
+            border: 1px solid;
+            margin-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 10px;
+        }
+    
+        i {
+            color: red;
+        }
+        .details p{
+            margin-right:2rem ;
+        }
+    </style>
+</head>
+<body>
+    
+    <h2>Fetching Latitude and longitude from Image</h2>
+    
+    <img src="IMG_20200222_154426.jpg" class="DisplayImage" alt="" height="260px" />
+    <img src="angular.png" class="DisplayImage" alt="" height="260px" />
+    <img src="" class="" id="preview" alt="Uploaded image" height="260px" /><br>
+    <i>Click on image to display the Details</i>
+    <div class="uploadSec">
+        <label for="uploadFile">Upload Image Here</label><br>
+        <input type="file" id="uploadFile" accept="image/*" /><br>
+    </div>
+    <div class="details" style="display: flex;">
+        <p>Latitude : <span id="Lati"></span> </p>
+        <p>Longitude : <span id="Long"></span></p>
+        <p>Capture Time : <span id="datetime"></span></p>
+    </div>
+    <script src="./exif.js"></script>
+    <script src="./image-location.js"></script>
+</body>
+</html>
